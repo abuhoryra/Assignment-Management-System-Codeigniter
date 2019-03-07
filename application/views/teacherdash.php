@@ -64,7 +64,7 @@ else{
         <?php echo $this->session->userdata('username'); ?>
       </a>
       <div class="dropdown-menu">
-        <a class="dropdown-item" href=""> Profile</a>
+        <a class="dropdown-item" href="<?php echo base_url('Teacher/load_teacher_profile'); ?>"> Profile</a>
         <a class="dropdown-item" href="<?php echo base_url('Welcome/logout'); ?>">Logout</a>
         
       </div>

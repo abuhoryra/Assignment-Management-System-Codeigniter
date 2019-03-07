@@ -94,9 +94,40 @@ class TeacherModel extends CI_Model {
         $data = array(
           'assignment' => $this->input->post('assignedit')
         
-);
+        );
 
      $this->db->where('id', $id);
       $this->db->update('assignment', $data);
     }
+
+
+    public function tech_profile(){
+      $this->db->select('*')
+               ->from('signup')
+               ->where('username',$this->session->userdata('username'))
+               ->where('level',2);
+      $result = $this->db->get();
+      return $result;
+    }
+
+
+    public function teacher_profile_update(){
+      $data = array(
+        'firstname' => $this->input->post('firstname'),
+        'lastname' => $this->input->post('lastname'),
+        'username' => $this->input->post('username'),
+        'email' => $this->input->post('email'),
+        'password' => $this->input->post('password'),
+        'phone' => $this->input->post('phone'),
+        'dob' => $this->input->post('dob'),
+        
+      );
+
+      $this->db->where('id', $this->session->userdata('id'));
+      $this->db->update('signup', $data);
+    }
+
+
+
+   
 }

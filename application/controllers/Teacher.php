@@ -145,5 +145,18 @@ class Teacher extends CI_Controller {
       
        }
 
+
+       public function load_teacher_profile(){
+        $this->load->model('TeacherModel');
+        $data['tdata'] = $this->TeacherModel->tech_profile();
+        $this->load->view('teacherprofile', $data);
+       }
+
+       public function update_teacher(){
+        $this->load->model('TeacherModel');
+        $this->TeacherModel->teacher_profile_update();
+        redirect('Teacher/load_teacher_profile');
+       }
+
 	
 }

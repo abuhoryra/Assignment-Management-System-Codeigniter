@@ -45,4 +45,7 @@ class Show extends CI_Controller {
         redirect('Teacher/showteacher');
     }
 
+
+    
+
 }

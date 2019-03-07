@@ -62,4 +62,22 @@ class Insert extends CI_Model {
         $this->db->delete('studentassignment', array('stu_username' => $this->session->userdata('username')));
        
     }
+
+
+     public function img_check() {
+       
+      $sis = $this->session->userdata('username');
+     // $tec = $this->input->post('teacherusername');
+        
+      $result = $this->db->select('id')
+                        ->from('profileimage')
+                        ->where('username', $sis)
+                        //->where('teacherusername', $tec)
+                        ->get()->row_array();
+      
+      if($result) 
+          return false;
+      else 
+        return true;
+    }
 }

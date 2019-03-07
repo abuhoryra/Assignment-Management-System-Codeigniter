@@ -134,6 +134,7 @@ class Welcome extends CI_Controller {
     }
 
     public function img_upload(){
+        $this->form_validation->set_rules('username','Already Uploaded','callback_img_valid');
         
         $config['upload_path']          = './upload/';
         $config['allowed_types']        = 'gif|jpg|png';
@@ -141,7 +142,9 @@ class Welcome extends CI_Controller {
         $config['max_width']            = 1024;
         $config['max_height']           = 768;
         $config['overwrite']            = false;
-        $config['encrypt_name']           = true;
+        $config['encrypt_name']         = true;
+        $config['width']                = 100;
+        $config['height']               = 150;
        
         $this->load->library('upload',$config);
 
@@ -155,9 +158,28 @@ class Welcome extends CI_Controller {
               'username' => $this->session->userdata('username'),
               'img_name' => $this->upload->file_name
             );
-           $this->db->insert('profileimage',$data);
+            if($this->form_validation->run()== FALSE){
+              echo "You Already Upload Your Image";
+            }
+            else {
+             $this->db->insert('profileimage',$data);
 
-           redirect('Show/read');
+             redirect('Show/read');
+            }
+
+           
         }
     }
+
+
+    public function img_valid(){
+        $this->load->model('Insert');
+
+        if($this->Insert->img_check()){
+          return true;
+        }
+        else {
+          return false;
+        }
+       }
 }

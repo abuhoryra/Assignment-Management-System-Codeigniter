@@ -31,16 +31,16 @@ class Read extends CI_Model {
      public function up(){
          
         $data = array(
-          'firstname' => $this->input->post('firstname'),
-        'lastname' => $this->input->post('lastname'),
-        'username' => $this->input->post('username'),
-        'email' => $this->input->post('email'),
-        'phone' => $this->input->post('phone'),
-        'dob' => $this->input->post('dob')
+            'firstname' => $this->input->post('firstname'),
+            'lastname' => $this->input->post('lastname'),
+            'username' => $this->input->post('username'),
+            'email' => $this->input->post('email'),
+            'phone' => $this->input->post('phone'),
+            'dob' => $this->input->post('dob')
         
-);
+        );
 
-     $this->db->where('id', $this->session->userdata('id'));
+      $this->db->where('id', $this->session->userdata('id'));
       $this->db->update('signup', $data);
     }
 
