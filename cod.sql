@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 04, 2019 at 08:33 AM
+-- Generation Time: Mar 07, 2019 at 09:37 AM
 -- Server version: 10.1.38-MariaDB
 -- PHP Version: 7.3.2
 
@@ -39,12 +39,8 @@ CREATE TABLE `addteacher` (
 --
 
 INSERT INTO `addteacher` (`id`, `studentusername`, `teacherusername`) VALUES
-(1, 'pranto', 'zamil'),
 (3, 'pranto', 'helal'),
-(15, 'pranto', 'amin'),
-(46, 'salman', 'zamil'),
-(47, 'salman', 'amin'),
-(48, 'salman', 'helal');
+(56, 'salman', 'zamil');
 
 -- --------------------------------------------------------
 
@@ -54,21 +50,9 @@ INSERT INTO `addteacher` (`id`, `studentusername`, `teacherusername`) VALUES
 
 CREATE TABLE `assignment` (
   `id` int(11) NOT NULL,
-  `student` varchar(300) NOT NULL,
   `teacher` varchar(30) NOT NULL,
   `assignment` varchar(500) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `assignment`
---
-
-INSERT INTO `assignment` (`id`, `student`, `teacher`, `assignment`) VALUES
-(15, 'Shakib,pranto', 'zamil', 'Here is your assignment'),
-(16, 'Shakib,pranto', 'zamil', 'dhhdjd'),
-(17, 'Shakib,pranto', 'zamil', 'Math 361 chapter 3-> 1,2,3,4,5'),
-(18, 'pranto', 'zamil', 'some assignment\r\n'),
-(19, 'salman', 'zamil', 'Here is your assignment.');
 
 -- --------------------------------------------------------
 
@@ -94,6 +78,25 @@ INSERT INTO `post` (`id`, `username`, `post`) VALUES
 (5, 'pranto', 'hi'),
 (6, 'pranto', 'hidshg'),
 (7, 'salman', 'hi');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `profileimage`
+--
+
+CREATE TABLE `profileimage` (
+  `id` int(11) NOT NULL,
+  `username` varchar(30) NOT NULL,
+  `img_name` varchar(100) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `profileimage`
+--
+
+INSERT INTO `profileimage` (`id`, `username`, `img_name`) VALUES
+(1, 'salman', '09ef7a7ba4a15b8f260afe1e9456a77c.png');
 
 -- --------------------------------------------------------
 
@@ -125,7 +128,19 @@ INSERT INTO `signup` (`id`, `firstname`, `lastname`, `username`, `email`, `passw
 (5, 'Hero', 'Alam', 'hero', 'heroalam@gmail.com', 'alam', 2147483647, '13-09-1995', 1),
 (6, 'Zamil', 'Ahsan', 'zamil', 'zamil@gmail.com', 'zamil', 2147483647, '12-09-187', 2),
 (8, 'Amin', 'Ahmed', 'amin', 'amin@gmail.com', 'amin', 2147483647, '12-12-1996', 2),
-(9, 'Salman', 'Khan', 'salman', 'salman@outlook.com', 'salman', 2147483647, '12-09-1876', 1);
+(9, 'Salman', ' Khan', 'salman', 'salman@outlook.com', 'salman', 1987456342, '12-09-1876', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `studentassignment`
+--
+
+CREATE TABLE `studentassignment` (
+  `id` int(11) NOT NULL,
+  `stu_username` varchar(30) NOT NULL,
+  `assignment_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Indexes for dumped tables
@@ -151,12 +166,26 @@ ALTER TABLE `post`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `profileimage`
+--
+ALTER TABLE `profileimage`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `username` (`username`);
+
+--
 -- Indexes for table `signup`
 --
 ALTER TABLE `signup`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `username` (`username`),
   ADD UNIQUE KEY `email` (`email`);
+
+--
+-- Indexes for table `studentassignment`
+--
+ALTER TABLE `studentassignment`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `assignment_id` (`assignment_id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -166,13 +195,13 @@ ALTER TABLE `signup`
 -- AUTO_INCREMENT for table `addteacher`
 --
 ALTER TABLE `addteacher`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
 
 --
 -- AUTO_INCREMENT for table `assignment`
 --
 ALTER TABLE `assignment`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT for table `post`
@@ -181,10 +210,32 @@ ALTER TABLE `post`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
+-- AUTO_INCREMENT for table `profileimage`
+--
+ALTER TABLE `profileimage`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT for table `signup`
 --
 ALTER TABLE `signup`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT for table `studentassignment`
+--
+ALTER TABLE `studentassignment`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `studentassignment`
+--
+ALTER TABLE `studentassignment`
+  ADD CONSTRAINT `studentassignment_ibfk_1` FOREIGN KEY (`assignment_id`) REFERENCES `assignment` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
