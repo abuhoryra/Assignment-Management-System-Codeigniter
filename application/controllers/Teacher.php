@@ -20,15 +20,14 @@ class Teacher extends CI_Controller {
 	 * @see https://codeigniter.com/user_guide/general/urls.html
 	 */
 
-       public function dashboard(){
+     public function dashboard(){
        	$this->load->model('Read');
 		    $data['data']=$this->Read->loadmystudent();
        $this->load->view('teacherdash',$data);
        	
-				//$this->load->view('teacherdash');
 		}
 
-		public function loadteacher(){
+		 public function loadteacher(){
 
          if($this->session->userdata('username')&& $this->session->userdata('level')==1){
         $this->load->model('Read');
@@ -39,86 +38,72 @@ class Teacher extends CI_Controller {
         else{
             redirect('Welcome/index');
         }
-
-
-
-			//$this->load->model('Read');
-			//$this->Read->teacherdata();
-
 		}
 
 
-		public function techinsert(){
-      
-      $this->form_validation->set_rules('teacherusername','teacherusername','callback_valid');
+		 public function techinsert(){
+       
+       $this->form_validation->set_rules('teacherusername','teacherusername','callback_valid');
             if($this->form_validation->run()== FALSE){
-              echo "Already Added";
+               echo "Already Added";
             }
-               else{
-      $this->load->model('TeacherModel');
-      $this->TeacherModel->teacadd();
-      redirect('Teacher/loadteacher');
+            else {
+               $this->load->model('TeacherModel');
+               $this->TeacherModel->teacadd();
+               redirect('Teacher/loadteacher');
            }
-      
-      
-
-			
-		}
+    }
 
 
 	
        public function myteacher(){
-       	redirect('Teacher/showteacher');
-       	//$this->load->view('myteacher');
+       	   redirect('Teacher/showteacher');
        }
 
-       public function showteacher(){
-       	 if($this->session->userdata('username')&& $this->session->userdata('level')==1){
-       	$this->load->model('Read');
-		$data['data']=$this->Read->loadmyteacher();
-		$data['sdata']=$this->Read->loadassign();
-       $this->load->view('myteacher',$data);
-      }
-        else{
-            redirect('Welcome/index');
-        }
+          public function showteacher(){
+       	    if($this->session->userdata('username')&& $this->session->userdata('level')==1){
+       	       $this->load->model('Read');
+		           $data['data']=$this->Read->loadmyteacher();
+		           $data['sdata']=$this->Read->loadassign();
+               $this->load->view('myteacher',$data);
+             }
+           else{
+               redirect('Welcome/index');
+           }
 
-       }
+         }
        
 
-  public function addassign(){
+       public function addassign(){
 
-   	if($this->session->userdata('username')&& $this->session->userdata('level')==2) {
+   	     if($this->session->userdata('username')&& $this->session->userdata('level')==2) {
 
-     	$this->load->model('TeacherModel');
-    	$this->TeacherModel->assignadd();
-    	redirect('Teacher/dashboard');
-   }
-   else {
-        redirect('Welcome/index');
-    }
-  }
+           $this->load->model('TeacherModel');
+    	     $this->TeacherModel->assignadd();
+    	     redirect('Teacher/dashboard');
+        }
+        else {
+           redirect('Welcome/index');
+         }
+       }
 
        public function viewassign(){
-       	$this->load->model('Read');
-		$sdata['sdata']=$this->Read->loadassign();
-       $this->load->view('studentassign',$sdata);
-
-   
-
+         $this->load->model('Read');
+	       $sdata['sdata']=$this->Read->loadassign();
+         $this->load->view('studentassign',$sdata);
        }
 
 
        public function valid(){
-        $this->load->model('TeacherModel');
+         $this->load->model('TeacherModel');
 
-        if($this->TeacherModel->check()){
-          return true;
-        }
-        else {
-          return false;
-        }
-       }
+         if($this->TeacherModel->check()){
+            return true;
+          }
+         else {
+            return false;
+          }
+      }
 
        public function getAssignment(){
         $this->load->model('TeacherModel');
@@ -127,22 +112,16 @@ class Teacher extends CI_Controller {
        }
 
        public function assignmentDelete($uid){
-   
-       
         $this->load->model('TeacherModel');
-       $this->TeacherModel->deleteAssignment($uid);
-       redirect('Teacher/getAssignment');
+        $this->TeacherModel->deleteAssignment($uid);
+        redirect('Teacher/getAssignment');
         
       
        }
        public function assignmentEdit($uid){
-   
-       
         $this->load->model('TeacherModel');
-       $this->TeacherModel->updateAssign($uid);
-       redirect('Teacher/getAssignment');
-        
-      
+        $this->TeacherModel->updateAssign($uid);
+        redirect('Teacher/getAssignment');
        }
 
 

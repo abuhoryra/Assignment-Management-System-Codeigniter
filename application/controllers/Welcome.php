@@ -28,7 +28,7 @@ class Welcome extends CI_Controller {
             elseif($this->session->userdata('username') && $this->session->userdata('level')==2){
                 redirect('Teacher/dashboard');
             }
-		$this->load->view('login');
+		    $this->load->view('login');
 	}
     public function signup()
 	{
@@ -60,21 +60,88 @@ class Welcome extends CI_Controller {
         $this->Insert->sinsert();
         redirect('Welcome/index');
                 }
-
-
-
-
-
-
-
        
 	}
     
-     public function updatedata()
-	{
-        $this->load->model('Read');
-		$this->Read->up();
-        redirect('Welcome/dash');
+    public function updatedata() {
+
+        
+
+       if ($_FILES['img']['size'] == 0) {
+    
+             redirect('Show/read');
+
+        }
+
+
+        $config['upload_path']          = './upload/';
+        $config['allowed_types']        = 'gif|jpg|png';
+        $config['max_size']             = 1024;
+        $config['max_width']            = 1024;
+        $config['max_height']           = 768;
+        $config['overwrite']            = false;
+        $config['encrypt_name']         = true;
+        $config['width']                = 100;
+        $config['height']               = 150;
+       
+        $this->load->library('upload',$config);
+       
+
+        if(!$this->upload->do_upload('img')) {
+
+            echo $this->upload->display_errors();
+        }
+        else {
+                     $data = $this->upload->data();  
+                     
+                     $config['image_library'] = 'gd2';  
+                     $config['source_image'] = './upload/'.$data["file_name"];  
+                     $config['create_thumb'] = FALSE;  
+                     $config['maintain_ratio'] = FALSE;  
+                     $config['quality'] = '100%';  
+                     $config['width'] = 400;  
+                     $config['height'] = 400;  
+                      $config['new_image'] = './upload/'.$data["file_name"]; 
+                     $this->load->library('image_lib', $config);  
+                     $this->image_lib->resize();  
+                     //$this->load->model('Read');
+               $this->load->model('Read');
+         $this->Read->up();
+
+             redirect('Show/read');
+
+           
+           
+          
+
+           
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+        //redirect('Welcome/dash');
 	}
     public function login(){
         $username = $this->input->post('username',true);
@@ -147,12 +214,25 @@ class Welcome extends CI_Controller {
         $config['height']               = 150;
        
         $this->load->library('upload',$config);
+       
 
         if(!$this->upload->do_upload('img')) {
 
             echo $this->upload->display_errors();
         }
         else {
+                     $data = $this->upload->data();  
+
+                     $config['image_library'] = 'gd2';  
+                     $config['source_image'] = './upload/'.$data["file_name"];  
+                     $config['create_thumb'] = FALSE;  
+                     $config['maintain_ratio'] = FALSE;  
+                     $config['quality'] = '100%';  
+                     $config['width'] = 400;  
+                     $config['height'] = 400;  
+                      $config['new_image'] = './upload/'.$data["file_name"]; 
+                     $this->load->library('image_lib', $config);  
+                     $this->image_lib->resize();  
 
             $data = array(
               'username' => $this->session->userdata('username'),

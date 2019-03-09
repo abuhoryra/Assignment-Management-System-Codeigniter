@@ -132,7 +132,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     
                     
                     
-                    <form method="post" action="<?php echo base_url('Welcome/updatedata'); ?>">
+                    <form method="post" action="<?php echo base_url('Welcome/updatedata'); ?>" enctype="multipart/form-data">
                       <div class="form-group">
                         <input type="text" id="name" name="firstname" class="form-control" value="<?php echo $row->firstname;  ?>">
                         <label class="form-control-placeholder" for="name">Firstname</label>
@@ -144,6 +144,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                       <div class="form-group">
                         <input type="text" id="uname" name="username" class="form-control" value="<?php echo $row->username;  ?>">
                         <label class="form-control-placeholder" for="uname">Username</label>
+                      </div>
+                      <div class="form-group">
+                       <img width="100" src="<?php echo base_url();?>upload/<?php echo $row->img_name;?>">
+                        
+                        <input type="file" name="img" />
+            
+     
                       </div>
                       <div class="form-group">
                         <input type="text" id="email" name="email" class="form-control" value="<?php echo $row->email;  ?>">
@@ -164,13 +171,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <button type="submit" class="btn btn-primary">Save changes</button>
                       </div>
                     </form>
-                    
-                    
-                    
-                    
-                    
-                    
-                    
                   </div>
                   
                 </div>

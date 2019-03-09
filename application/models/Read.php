@@ -28,7 +28,22 @@ class Read extends CI_Model {
         $result=$this->db->get();
         return $result;
     }
-     public function up(){
+
+    public function update_user_photo() {
+
+      $user = $this->db->select('img_name')
+                       ->from('profileimage');
+
+       return $user;
+      if($user['img_name']) {
+        $file_path = './upload/'.$user['img_name'];
+
+        if(file_exists($file_path)) {
+          unlink($file_path);
+        }
+      }
+    }
+    public function up(){
          
         $data = array(
             'firstname' => $this->input->post('firstname'),
@@ -37,11 +52,21 @@ class Read extends CI_Model {
             'email' => $this->input->post('email'),
             'phone' => $this->input->post('phone'),
             'dob' => $this->input->post('dob')
-        
         );
+
+         $idata = array(
+              //'username' => $this->session->userdata('username'),
+              'img_name' => $this->upload->file_name
+            );
 
       $this->db->where('id', $this->session->userdata('id'));
       $this->db->update('signup', $data);
+       
+        
+        $this->db->where('username', $this->session->userdata('username'));
+        $this->db->update('profileimage', $idata);
+       
+       
     }
 
      public function fetchpost(){
