@@ -101,47 +101,17 @@ class Welcome extends CI_Controller {
                      $config['quality'] = '100%';  
                      $config['width'] = 400;  
                      $config['height'] = 400;  
-                      $config['new_image'] = './upload/'.$data["file_name"]; 
+                     $config['new_image'] = './upload/'.$data["file_name"]; 
                      $this->load->library('image_lib', $config);  
                      $this->image_lib->resize();  
-                     //$this->load->model('Read');
-               $this->load->model('Read');
-         $this->Read->up();
+                 
+                     $this->load->model('Read');
+                     $this->Read->up();
 
              redirect('Show/read');
 
-           
-           
-          
-
-           
         }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-        //redirect('Welcome/dash');
 	}
     public function login(){
         $username = $this->input->post('username',true);
@@ -230,7 +200,7 @@ class Welcome extends CI_Controller {
                      $config['quality'] = '100%';  
                      $config['width'] = 400;  
                      $config['height'] = 400;  
-                      $config['new_image'] = './upload/'.$data["file_name"]; 
+                     $config['new_image'] = './upload/'.$data["file_name"]; 
                      $this->load->library('image_lib', $config);  
                      $this->image_lib->resize();  
 

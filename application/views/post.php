@@ -83,13 +83,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
           ?>
 
           <div class="div1">
+             <h5></h5>
             <h4><?php echo $row->username; ?></h4>
             <p><?php echo $row->post; ?></p>
           </div>
+         
        
          <?php
  }
       ?>
+       <div class="page1" style="margin-top: 15px; margin-left: 25%;">
+            <?php echo $this->pagination->create_links(); ?>
+          </div>
+
       </div>
     </div>
   </div>

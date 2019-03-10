@@ -69,11 +69,12 @@ class Read extends CI_Model {
        
     }
 
-     public function fetchpost(){
-         $this->db->select('*');
+     public function fetchpost($limit,$start){
+        $this->db->select('*');
         $this->db->from('post');
         $this->db->where('username',$this->session->userdata('username'));
         $this->db->order_by('id', 'DESC');
+        $this->db->limit($limit,$start);
         $result=$this->db->get();
         return $result;
     }
