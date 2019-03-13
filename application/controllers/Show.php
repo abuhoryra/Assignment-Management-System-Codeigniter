@@ -22,7 +22,7 @@ class Show extends CI_Controller {
         if($this->session->userdata('username')&& $this->session->userdata('level')==1){
         $this->load->model('Read');
         $data['data']=$this->Read->userinfo();
-       $this->load->view('profile',$data);
+        $this->load->view('profile',$data);
         }
         else{
             redirect('Welcome/index');

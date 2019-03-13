@@ -3,21 +3,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Welcome extends CI_Controller {
 
-	/**
-	 * Index Page for this controller.
-	 *
-	 * Maps to the following URL
-	 * 		http://example.com/index.php/welcome
-	 *	- or -
-	 * 		http://example.com/index.php/welcome/index
-	 *	- or -
-	 * Since this controller is set as the default controller in
-	 * config/routes.php, it's displayed at http://example.com/
-	 *
-	 * So any other public methods not prefixed with an underscore will
-	 * map to /index.php/welcome/<method_name>
-	 * @see https://codeigniter.com/user_guide/general/urls.html
-	 */
+	public function __construct() {
+
+        parent::__construct();
+
+        $this->load->model('Insert');
+    }
+
 	public function index()
 	{
 
@@ -30,6 +22,7 @@ class Welcome extends CI_Controller {
             }
 		    $this->load->view('login');
 	}
+
     public function signup()
 	{
        
@@ -64,15 +57,6 @@ class Welcome extends CI_Controller {
 	}
     
     public function updatedata() {
-
-        
-
-       if ($_FILES['img']['size'] == 0) {
-    
-             redirect('Show/read');
-
-        }
-
 
         $config['upload_path']          = './upload/';
         $config['allowed_types']        = 'gif|jpg|png';
@@ -113,28 +97,34 @@ class Welcome extends CI_Controller {
         }
 
 	}
+
     public function login(){
-        $username = $this->input->post('username',true);
-        $password = $this->input->post('password',true);
-        $this->load->model('Insert');
-        $result=$this->Insert->log($username,$password);
-        $sdata=array();
-        if($result){
-            $sdata['id']=$result['id'];
-            $sdata['username']=$result['username'];
-            $sdata['level']=$result['level'];
+
+        $username = $this->input->post('username');
+
+        if($this->Insert->log()){
+
+            $user = $this->Insert->getMyInfo($username);
+
+            $sdata['id']=$user['id'];
+            $sdata['username']=$user['username'];
+            $sdata['level']=$user['level'];
             $this->session->set_userdata($sdata);
-            if($this->session->userdata('username') && $this->session->userdata('level')==1){
+
+            if($user['level']==1){
                 redirect('Welcome/dash');
             }
-           if($this->session->userdata('username') && $this->session->userdata('level')==2){
+            else if($user['level']==2){
                 redirect('Teacher/dashboard');
             }
         }
-        else{
+        else {
+
             echo "Wrong";
         }
+    
     }
+
     public function dash(){
     		//if($this->session->userdata('username') && $this->session->userdata('level')==1){
 			//$this->load->view('dashboard');
@@ -232,4 +222,6 @@ class Welcome extends CI_Controller {
           return false;
         }
        }
+
+
 }
